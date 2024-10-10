@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Kanvas",
     platforms: [
-        .iOS(.v16)
+        .iOS(.v15)
     ],
     products: [
         .library(
@@ -21,7 +21,7 @@ let package = Package(
             name: "Kanvas",
             dependencies: [.product(name: "CropViewController", package: "TOCropViewController")],
             path: "Classes",
-            resources: [.copy("Resources")]
+            resources: [.process("Resources")]
         ),
     ]
 )

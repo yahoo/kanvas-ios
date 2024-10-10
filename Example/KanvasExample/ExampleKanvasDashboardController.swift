@@ -115,10 +115,6 @@ public class KanvasDashboardController: UIViewController {
 }
 
 extension KanvasDashboardController: CameraControllerDelegate {
-    
-    public func didSelectStickersTab() {
-        
-    }
 
     public func screenDidAppear(_ screen: KanvasScreen) {
         print("🔵 Dashboard screen did appear: \(screen)")
@@ -157,7 +153,7 @@ extension KanvasDashboardController: CameraControllerDelegate {
         // Only supported in Orangina
     }
 
-    public func didCreateMedia(_ cameraController: CameraController, media: [Result<KanvasMedia?, Error>], exportAction: KanvasExportAction, stickers: [MovableView]) {
+    public func didCreateMedia(_ cameraController: CameraController, media: [Result<KanvasMedia?, Error>], exportAction: KanvasExportAction) {
         media.forEach { result in
             switch result {
             case .failure(let error):

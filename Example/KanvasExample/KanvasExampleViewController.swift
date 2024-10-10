@@ -426,7 +426,7 @@ extension KanvasExampleViewController: CameraControllerDelegate {
         
     }
 
-    func didCreateMedia(_ cameraController: CameraController, media: [Result<KanvasMedia?, Error>], exportAction: KanvasExportAction, stickers: [MovableView]) {
+    func didCreateMedia(_ cameraController: CameraController, media: [Result<KanvasMedia?, Error>], exportAction: KanvasExportAction) {
         media.forEach { result in
             switch result {
             case .failure(let error):
