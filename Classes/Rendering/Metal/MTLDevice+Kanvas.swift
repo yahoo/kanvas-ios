@@ -11,7 +11,7 @@ import MetalKit
 // 2. Concatinate all source files as a string then compile it at runtime by using MTLDevice::makeLibrary(source:options:)
 extension MTLDevice {
     public func makeKanvasDefaultLibrary() -> MTLLibrary? {
-        let url = Bundle.module.url(forResource: "shaders", withExtension: "metal")!
+        let url = Bundle.module.url(forResource: "shaders", withExtension: "metal", subdirectory: "Files")!
         
         var source = ""
         

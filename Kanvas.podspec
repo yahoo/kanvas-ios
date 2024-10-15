@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.frameworks = 'Foundation', 'GLKit', 'OpenGLES', 'UIKit'
   spec.source_files = 'Classes/**/*.{h,m,swift,vsh,glsl}'
   spec.resource_bundles = {
-    'Kanvas' => ['Classes/Resources/*']
+    'Kanvas' => ['Classes/Files/*']
   }
   spec.dependency 'CropViewController'
   spec.user_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'GLES_SILENCE_DEPRECATION=1' }

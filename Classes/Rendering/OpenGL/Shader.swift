@@ -57,7 +57,7 @@ class Shader {
     /// - Returns: The shader source code as a String
     class func getSourceCode(_ name: String, type: ShaderExtension) -> String? {
         let extString: String = type.rawValue
-        let url = Bundle.module.url(forResource: name, withExtension: extString)!
+        let url = Bundle.module.url(forResource: name, withExtension: extString, subdirectory: "Files")!
         
         do {
             let source = try String(contentsOf: url, encoding: .utf8)
