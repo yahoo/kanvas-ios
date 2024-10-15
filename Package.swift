@@ -21,7 +21,7 @@ let package = Package(
             name: "Kanvas",
             dependencies: [.product(name: "CropViewController", package: "TOCropViewController")],
             path: "Classes",
-            resources: [.copy("Resources")]
+            resources: [.copy("Files")]
         ),
     ]
 )
