@@ -9,7 +9,12 @@ import UIKit
 /// Extension for loading images from the bundle
 extension UIImage {
     class func imageFromCameraBundle(named: String) -> UIImage? {
-        let image = UIImage(named: named, in: Bundle.module, compatibleWith: nil)
+        guard let url = Bundle.module.url(forResource: named, withExtension: "png", subdirectory: "Files") else {
+            print("Missing module for image \(named)")
+            return nil
+        }
+        
+        let image = UIImage(contentsOfFile: url.path(percentEncoded: false))
         if image == nil {
             print("Missing image \(named)")
         }
