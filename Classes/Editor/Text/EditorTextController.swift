@@ -295,7 +295,7 @@ final class EditorTextController: UIViewController, EditorTextViewDelegate, Colo
     /// - Parameter transformations: transformations for the view
     /// - Parameter options: text style options
     func showView(_ visible: Bool,
-                  options: TextOptions = TextOptions(font: Constants.fonts.first ?? nil),
+                  options: TextOptions = TextOptions(font: KanvasFonts.yahooFont(withSize: 48)),
                   transformations: ViewTransformations = ViewTransformations()) {
         if visible {
             show(options: options, transformations: transformations)

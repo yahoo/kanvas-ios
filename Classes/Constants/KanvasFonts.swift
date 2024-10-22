@@ -21,6 +21,10 @@ public struct KanvasFonts {
         return UIFont.systemFont(ofSize: fontSize)
     }
     
+    public static func yahooFont(withSize size: CGFloat) -> UIFont {
+        return UIFont(name: "GTAmerica", size: size) ?? UIFont.systemFont(ofSize: size)
+    }
+    
     static let defaultCameraPermissions = CameraPermissions(titleFont: durianMedium, descriptionFont: guava85, buttonFont: guavaMedium)
     static let defaultDrawer = Drawer(textSelectedFont: KanvasFonts.favoritTumblrMedium(fontSize: 14), textUnselectedFont: KanvasFonts.favoritTumblr85(fontSize: 14))
     

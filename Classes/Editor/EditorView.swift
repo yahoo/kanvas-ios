@@ -675,49 +675,35 @@ final class EditorView: UIView, MovableViewCanvasDelegate, MediaPlayerViewDelega
     }
 
     func setupPostButton() {
-        postButton.accessibilityLabel = "Post Button"
-        postButton.clipsToBounds = false
         postButton.layer.applyShadows()
         navigationContainer.addSubview(postButton)
-        if let avatarView = self.avatarView {
-            updatePostButton(avatarView: avatarView)
-        }
-        else {
-            postButton.setImage(KanvasImages.shared.nextImage, for: .normal)
-        }
-        postButton.contentHorizontalAlignment = .fill
-        postButton.contentVerticalAlignment = .fill
+        postButton.backgroundColor = UIColor.systemBlue
+        let image = UIImage(systemName: "paperplane")?.withRenderingMode(.alwaysTemplate)
+        postButton.setImage(image, for: .normal)
         postButton.translatesAutoresizingMaskIntoConstraints = false
+        postButton.clipsToBounds = true
+        postButton.layer.cornerRadius = 20.0
+        postButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 11, bottom: 0, right: 16)
+        postButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -8)
+        postButton.tintColor = .white
+        postButton.semanticContentAttribute = .forceRightToLeft
+        let font =  KanvasFonts.yahooFont(withSize: 16)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.white,
+        ]
 
+        let attributedTitle = NSAttributedString(string: "Send", attributes: attributes)
+        postButton.setAttributedTitle(attributedTitle, for: .normal)
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(postButtonPressed))
         postButton.addGestureRecognizer(tapGestureRecognizer)
         
         NSLayoutConstraint.activate([
             postButton.trailingAnchor.constraint(equalTo: safeLayoutGuide.trailingAnchor, constant: -EditorViewConstants.postButtonHorizontalMargin),
             postButton.heightAnchor.constraint(equalToConstant: EditorViewConstants.postButtonSize),
-            postButton.widthAnchor.constraint(equalToConstant: EditorViewConstants.postButtonSize),
             postButton.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -EditorViewConstants.postButtonVerticalMargin)
         ])
-        
-        postLabel.text = NSLocalizedString("Post", comment: "Message for the post button in the editor screen")
-        postLabel.textColor = .white
-        postLabel.font = KanvasFonts.shared.postLabelFont
-        postLabel.clipsToBounds = false
-        postLabel.layer.applyShadows()
-        postLabel.translatesAutoresizingMaskIntoConstraints = false
-        postLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postButtonPressed)))
-        postLabel.isUserInteractionEnabled = true
-        navigationContainer.addSubview(postLabel)
-        
-        NSLayoutConstraint.activate([
-            postLabel.centerXAnchor.constraint(equalTo: postButton.centerXAnchor),
-            postLabel.topAnchor.constraint(equalTo: postButton.bottomAnchor, constant: EditorViewConstants.postButtonLabelMargin),
-        ])
-
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(postButtonLongPressed(_:)))
-        longPressRecognizer.allowableMovement = 10.0
-        longPressRecognizer.minimumPressDuration = 0.4
-        postButton.addGestureRecognizer(longPressRecognizer)
     }
 
     func setupSaveButton() {

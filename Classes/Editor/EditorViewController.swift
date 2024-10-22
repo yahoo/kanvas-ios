@@ -210,6 +210,13 @@ public final class EditorViewController: UIViewController, MediaPlayerController
         }
     }
 
+    private lazy var saveConfirmationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Media saved successfully!"
+        label.isHidden = true
+        return label
+    }()
+    
     private let player: MediaPlayer
     private var filterType: FilterType? {
         didSet {
@@ -407,7 +414,13 @@ public final class EditorViewController: UIViewController, MediaPlayerController
 
         setupNotifications()
     }
-
+    
+    private func setupLabels() {
+        self.view.addSubview(saveConfirmationLabel)
+        saveConfirmationLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        saveConfirmationLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+ 
     private func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
@@ -457,6 +470,8 @@ public final class EditorViewController: UIViewController, MediaPlayerController
         else if shouldConvertMediaToGIFOnLoad() {
             loadMediaAsGIF(permanent: true)
         }
+        
+        setupLabels()
     }
     
     override public var preferredStatusBarStyle: UIStatusBarStyle {
@@ -925,6 +940,10 @@ public final class EditorViewController: UIViewController, MediaPlayerController
                 self.delegate?.didFinishExportingVideo(url: url, info: mediaInfo, archive: archive, action: exportAction, mediaChanged: self.mediaChanged, stickers: stickers)
                 self.restartPlayback()
                 self.hideLoading()
+                
+                if exportAction == .save {
+                    self.saveConfirmationLabel.isHidden = false
+                }
             }
         }
     }
@@ -951,6 +970,9 @@ public final class EditorViewController: UIViewController, MediaPlayerController
                 let stickers: [MovableView] = self.editorView.movableViewCanvas.movableViews.filter { $0.innerView is StylableImageView }
                 self.delegate?.didFinishExportingImage(image: unwrappedImage, info: mediaInfo, archive: archive, action: exportAction, mediaChanged: self.mediaChanged, stickers: stickers)
                 self.hideLoading()
+                if exportAction == .save {
+                    self.saveConfirmationLabel.isHidden = false
+                }
             }
         }
     }
