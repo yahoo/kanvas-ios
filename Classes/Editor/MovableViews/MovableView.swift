@@ -119,6 +119,7 @@ final public class MovableView: UIView, NSSecureCoding {
         default:
             innerView = StylableTextView()
         }
+        
         originLocation = aDecoder.decodeCGPoint(forKey: CodingKeys.origin.rawValue)
 
         super.init(frame: .zero)
@@ -168,6 +169,7 @@ final public class MovableView: UIView, NSSecureCoding {
     
     /// Updates the scaling, rotation and position transformations
     private func applyTransform() {
+        print("scale is \(scale)")
         innerView.contentScaleFactor = scale
         
         transform = CGAffineTransform(scaleX: scale, y: scale)

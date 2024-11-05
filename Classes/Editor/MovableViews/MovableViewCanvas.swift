@@ -36,6 +36,9 @@ protocol MovableViewCanvasDelegate: AnyObject {
     
     /// Called when the touch events on a movable view end
     func didEndTouchesOnMovableView()
+    
+    /// Called when the canvas is touched over empty space
+    func didTouchEmptySpace()
 }
 
 /// Constants for the canvas
@@ -43,7 +46,7 @@ private struct Constants {
     static let animationDuration: TimeInterval = 0.25
     static let trashViewSize: CGFloat = KanvasDesign.shared.trashViewSize
     static let trashViewBottomMargin: CGFloat = 93
-    static let overlayColor = UIColor.black.withAlphaComponent(0.7)
+    static let overlayColor = UIColor.black.withAlphaComponent(0.25)
 }
 
 /// View that contains the collection of movable views
@@ -258,6 +261,7 @@ final class MovableViewCanvas: IgnoreTouchesView, UIGestureRecognizerDelegate, M
         movableViews.forEach { movableView in
             movableView.fadeIn()
         }
+        
         trashView.hide()
     }
     
@@ -318,15 +322,34 @@ final class MovableViewCanvas: IgnoreTouchesView, UIGestureRecognizerDelegate, M
         switch recognizer.state {
         case .began:
             onRecognizerBegan(view: movableView)
+            showOverlay(true)
+            touchPosition = [recognizer.location(in: self)]
+            trashView.changeStatus(touchPosition)
             originTransformations.position = movableView.position
         case .changed:
             let newPosition = originTransformations.position + recognizer.translation(in: self)
             movableView.position = newPosition
+            touchPosition = [recognizer.location(in: self)]
+            trashView.changeStatus(touchPosition)
         case .ended:
             onRecognizerEnded()
             movableView.onMove()
+            
+            if trashView.contains(touchPosition) {
+                movableView.remove()
+            }
+            
+            showOverlay(false)
+            trashView.hide()
         case .cancelled, .failed:
             onRecognizerEnded()
+            
+            if trashView.contains(touchPosition) {
+                movableView.remove()
+            }
+            
+            showOverlay(false)
+            trashView.hide()
         case .possible:
             break
         @unknown default:
@@ -444,10 +467,17 @@ final class MovableViewCanvas: IgnoreTouchesView, UIGestureRecognizerDelegate, M
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let location = point
+        let isTouchingEmptySpace = movableViews.map { $0.frame }.allSatisfy { !$0.contains(location) }
+        
         if let currentMovableView = currentMovableView {
             return currentMovableView
         }
         else {
+            if isTouchingEmptySpace {
+                delegate?.didTouchEmptySpace()
+            }
+            
             return super.hitTest(point, with: event)
         }
     }

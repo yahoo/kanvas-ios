@@ -78,6 +78,9 @@ protocol EditorViewDelegate: AnyObject {
     ///
     /// - Returns: the blog switcher.
     func getBlogSwitcher() -> UIView
+    
+    /// Called when the editor touches empty space
+    func didTouchEmptySpace()
 }
 
 /// Constants for EditorView
@@ -94,7 +97,9 @@ private struct EditorViewConstants {
     static let muteButtonSize: CGFloat = 50
     static let muteButtonBackgroundColor = UIColor.black.withAlphaComponent(0.49) // Matches the edition option buttons but they include their backgrounds in the asset.
     static let saveButtonSize: CGFloat = 34
-    static let saveButtonHorizontalMargin: CGFloat = 20
+    static let saveButtonBackgroundSize: CGFloat = 50
+    static let saveButtonHorizontalMargin: CGFloat = 28
+    static let saveButtonBackgroundHorizontalMargin: CGFloat = 20
     static let fakeOptionCellMinSize: CGFloat = KanvasEditorDesign.shared.editorViewFakeOptionCellMinSize
     static let fakeOptionCellMaxSize: CGFloat = KanvasEditorDesign.shared.editorViewFakeOptionCellMaxSize
     
@@ -118,6 +123,9 @@ private struct EditorViewConstants {
 /// A UIView to preview the contents of segments without exporting
 
 final class EditorView: UIView, MovableViewCanvasDelegate, MediaPlayerViewDelegate {
+    func didTouchEmptySpace() {
+        delegate?.didTouchEmptySpace()
+    }
 
     func didRenderRectChange(rect: CGRect) {
         if playerView?.contentMode != .scaleToFill {
@@ -707,6 +715,12 @@ final class EditorView: UIView, MovableViewCanvasDelegate, MediaPlayerViewDelega
     }
 
     func setupSaveButton() {
+        let shadeView = UIView()
+        shadeView.translatesAutoresizingMaskIntoConstraints = false
+        shadeView.backgroundColor = .black.withAlphaComponent(0.5)
+        shadeView.layer.cornerRadius = EditorViewConstants.saveButtonBackgroundSize / 2
+        navigationContainer.addSubview(shadeView)
+
         saveButton.accessibilityLabel = "Save Button"
         navigationContainer.addSubview(saveButton)
         saveButton.layer.applyShadows()
@@ -716,6 +730,11 @@ final class EditorView: UIView, MovableViewCanvasDelegate, MediaPlayerViewDelega
         saveButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            shadeView.centerYAnchor.constraint(equalTo: confirmOrPostButton().centerYAnchor),
+            shadeView.trailingAnchor.constraint(equalTo: confirmOrPostButton().leadingAnchor, constant: -EditorViewConstants.saveButtonBackgroundHorizontalMargin),
+            shadeView.heightAnchor.constraint(equalToConstant: EditorViewConstants.saveButtonBackgroundSize),
+            shadeView.widthAnchor.constraint(equalToConstant: EditorViewConstants.saveButtonBackgroundSize),
+            
             saveButton.centerYAnchor.constraint(equalTo: confirmOrPostButton().centerYAnchor),
             saveButton.trailingAnchor.constraint(equalTo: confirmOrPostButton().leadingAnchor, constant: -EditorViewConstants.saveButtonHorizontalMargin),
             saveButton.heightAnchor.constraint(equalToConstant: EditorViewConstants.saveButtonSize),
