@@ -86,6 +86,22 @@ private struct Constants {
 
 /// A view controller to edit the segments
 public final class EditorViewController: UIViewController, MediaPlayerController, EditorViewDelegate, KanvasEditorMenuControllerDelegate, EditorFilterControllerDelegate, DrawingControllerDelegate, EditorTextControllerDelegate, MediaDrawerControllerDelegate, GifMakerHandlerDelegate, MediaPlayerDelegate, CropViewControllerDelegate {
+    
+    func didTouchEmptySpace() {
+        let cell = collectionController.getCell(for: .text)
+        onBeforeShowingEditionMenu(.text, cell: cell)
+        showMainUI(false)
+        analyticsProvider?.logEditorTextAdd()
+        editingNewText = true
+        textController.showView(true)
+        if settings.animateEditorControls {
+            editorView.animateEditionOption(cell: cell, finalLocation: textController.confirmButtonLocation, completion: { _ in
+                self.textController.showConfirmButton(true)
+            })
+        } else {
+            self.textController.showConfirmButton(true)
+        }
+    }
 
     enum Media {
         case image(UIImage)
