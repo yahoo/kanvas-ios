@@ -91,6 +91,7 @@ public struct KanvasImages {
         .filter: [UIImage.imageFromCameraBundle(named: "editorFilters")],
         .text: [UIImage.imageFromCameraBundle(named: "editorText")],
         .media: [UIImage.imageFromCameraBundle(named: "editorMedia")],
+        .photoStickers: [UIImage(systemName: "camera")],
         .drawing: [UIImage.imageFromCameraBundle(named: "editorDraw")],
         .cropRotate: [UIImage.imageFromCameraBundle(named: "editorCropRotate")]
     ]

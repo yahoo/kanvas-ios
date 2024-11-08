@@ -48,6 +48,10 @@ final class EditionMenuCollectionController: UIViewController, KanvasEditorMenuC
             editionOptions.append(.cropRotate)
         }
         
+        if settings.features.editorPhotoStickers {
+            editionOptions.append(.photoStickers)
+        }
+        
         if settings.features.editorText {
             editionOptions.append(.text)
         }

@@ -69,13 +69,13 @@ final class EditionMenuCollectionCell: UICollectionViewCell, KanvasEditorMenuCol
     ///  - option: The edition menu to display
     ///  - enabled: Whether the option is on or off.
     func bindTo(_ option: EditionOption, enabled: Bool) {
-        if option == .cropRotate {
+        let shadedOptions: [EditionOption] = [.cropRotate, .photoStickers]
+        if shadedOptions.contains(option) {
             iconView.image = KanvasImages.editionOptionTypes(option, enabled: enabled)?.withRenderingMode(.alwaysTemplate)
             iconView.tintColor = .white
             iconViewHeightConstraint?.constant = Constants.vectorIconHeight
             shadeView.isHidden = false
-        }
-        else {
+        } else {
             iconView.image = KanvasImages.editionOptionTypes(option, enabled: enabled)
             shadeView.isHidden = true
         }

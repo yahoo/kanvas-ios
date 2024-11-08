@@ -311,6 +311,10 @@ extension MultiEditorViewController: MediaClipsEditorDelegate {
 }
 
 extension MultiEditorViewController: EditorControllerDelegate {
+    func didSelectPhotoStickers() {
+        
+    }
+    
     func editorDidAppear() {
         delegate?.editorDidAppear()
     }
