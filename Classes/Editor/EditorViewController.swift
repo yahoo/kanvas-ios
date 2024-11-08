@@ -67,7 +67,11 @@ public protocol EditorControllerDelegate: AnyObject {
     /// Called when the editor screen is not longer visible.
     func editorWillDisappear()
     
+    /// Called when the stickers button is tapped
     func didSelectStickersTab()
+    
+    /// Called when the photo ticker button is tapped
+    func didSelectPhotoStickers()
 }
 
 extension EditorControllerDelegate {
@@ -1063,7 +1067,7 @@ public final class EditorViewController: UIViewController, MediaPlayerController
             showMainUI(true)
         case .media:
             analyticsProvider?.logEditorMediaDrawerClosed()
-        case .cropRotate:
+        case .cropRotate, .photoStickers:
             break
         }
         
@@ -1124,8 +1128,10 @@ public final class EditorViewController: UIViewController, MediaPlayerController
         case .media:
             onBeforeShowingEditionMenu(editionOption, cell: cell)
             analyticsProvider?.logEditorMediaDrawerOpen()
-            //openMediaDrawer()
             delegate?.didSelectStickersTab()
+        case .photoStickers:
+            onBeforeShowingEditionMenu(editionOption, cell: cell)
+            delegate?.didSelectPhotoStickers()
         case .cropRotate:
             onBeforeShowingEditionMenu(editionOption, cell: cell)
             analyticsProvider?.logEditorCropRotateOpen()

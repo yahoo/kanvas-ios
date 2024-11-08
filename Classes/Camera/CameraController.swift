@@ -911,7 +911,22 @@ open class CameraController: UIViewController, MediaClipsEditorDelegate, CameraP
     public func didSelectStickersTab() {
         delegate?.didSelectStickersTab()
     }
-
+    
+    public func didSelectPhotoStickers() {
+        guard let presentedVC = self.presentedViewController else {
+            return
+        }
+        
+        let previousModes = settings.enabledModes
+        settings.enabledModes = [.photo]
+        
+        mediaPicker.present(on: presentedVC, with: settings, delegate: self, completion: {
+            self.modeAndShootController.resetMediaPickerButton()
+        })
+        
+        settings.enabledModes = previousModes
+    }
+    
     func previewDidAppear() {
         delegate?.screenDidAppear(.preview)
     }
@@ -1215,8 +1230,32 @@ open class CameraController: UIViewController, MediaClipsEditorDelegate, CameraP
         return CameraSegment.video(url, mediaInfo)
 
     }
+    
+    private func insertSticker(from media: PickedMedia) {
+        guard case .image(let image, let url) = media else {
+            return
+        }
+        
+        if let editorController = self.mediaPlayerController as? EditorViewController {
+            let imageView = StylableImageView(id: "", image: image)
+            var size = image.size
+            
+            if size.width >= (self.view.bounds.width * 0.75) || size.height >= (self.view.bounds.height * 0.75) {
+                let difference = self.view.bounds.width / size.width
+                size.width = (size.width * difference) / 2
+                size.height = (size.height * difference) / 2
+            }
+                
+            editorController.didSelectSticker(imageView: imageView, size: size)
+        }
+    }
 
     public func didPick(media: [PickedMedia]) {
+        guard let firstMedia = media.first else { return }
+        guard mediaPlayerController == nil else {
+            self.insertSticker(from: firstMedia)
+            return
+        }
 
         let mediaTypes = media.map { media -> KanvasMediaType in
             switch media {

@@ -12,6 +12,7 @@ enum EditionOption: Int {
     case filter
     case text
     case media
+    case photoStickers
     case drawing
     case cropRotate
     
@@ -25,6 +26,8 @@ enum EditionOption: Int {
             return NSLocalizedString("EditorText", comment: "Label for the text option in the editor tools")
         case .media:
             return NSLocalizedString("EditorMedia", comment: "Label for the media option in the editor tools")
+        case .photoStickers:
+            return NSLocalizedString("EditorPhotoStickers", comment: "Label for the photo picker option in the editor tools")
         case .drawing:
             return NSLocalizedString("EditorDrawing", comment: "Label for the drawing option in the editor tools")
         case .cropRotate:
