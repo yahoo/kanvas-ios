@@ -35,26 +35,6 @@ final class EditionMenuCollectionController: UIViewController, KanvasEditorMenuC
     init(settings: CameraSettings, shouldExportMediaAsGIF: Bool?) {
         self.editionOptions = []
         self.shouldExportMediaAsGIF = shouldExportMediaAsGIF ?? false
-
-        if settings.features.gifs && shouldExportMediaAsGIF != nil {
-            editionOptions.append(.gif)
-        }
-        
-        if settings.features.editorFilters {
-            editionOptions.append(.filter)
-        }
-        
-        if settings.features.editorCropRotate {
-            editionOptions.append(.cropRotate)
-        }
-        
-        if settings.features.editorPhotoStickers {
-            editionOptions.append(.photoStickers)
-        }
-        
-        if settings.features.editorText {
-            editionOptions.append(.text)
-        }
         
         if settings.features.editorMedia {
             editionOptions.append(.media)
@@ -62,6 +42,26 @@ final class EditionMenuCollectionController: UIViewController, KanvasEditorMenuC
         
         if settings.features.editorDrawing {
             editionOptions.append(.drawing)
+        }
+        
+        if settings.features.editorPhotoStickers {
+            editionOptions.append(.photoStickers)
+        }
+
+//        if settings.features.gifs && shouldExportMediaAsGIF != nil {
+//            editionOptions.append(.gif)
+//        }
+//        
+//        if settings.features.editorFilters {
+//            editionOptions.append(.filter)
+//        }
+//        
+        if settings.features.editorCropRotate {
+            editionOptions.append(.cropRotate)
+        }
+        
+        if settings.features.editorText {
+            editionOptions.append(.text)
         }
         
         super.init(nibName: .none, bundle: .none)
