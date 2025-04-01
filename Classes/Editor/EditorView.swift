@@ -88,13 +88,13 @@ private struct EditorViewConstants {
     static let animationDuration: TimeInterval = 0.25
     static let editionOptionAnimationDuration: TimeInterval = 0.5
     static let editionOptionAnimationBouncingFactor: CGFloat = 1.1
-    static let confirmButtonSize: CGFloat = 49
+    static let confirmButtonSize: CGFloat = 44
     static let confirmButtonHorizontalMargin: CGFloat = 20
-    static let postButtonSize: CGFloat = 54
+    static let postButtonSize: CGFloat = 50
     static let postButtonHorizontalMargin: CGFloat = 18
     static let postButtonVerticalMargin: CGFloat = Device.belongsToIPhoneXGroup ? 13 : 29
     static let postButtonLabelMargin: CGFloat = 3
-    static let muteButtonSize: CGFloat = 50
+    static let muteButtonSize: CGFloat = 44
     static let muteButtonBackgroundColor = UIColor.black.withAlphaComponent(0.49) // Matches the edition option buttons but they include their backgrounds in the asset.
     static let saveButtonSize: CGFloat = 34
     static let saveButtonBackgroundSize: CGFloat = 50
@@ -686,23 +686,14 @@ final class EditorView: UIView, MovableViewCanvasDelegate, MediaPlayerViewDelega
         postButton.layer.applyShadows()
         navigationContainer.addSubview(postButton)
         postButton.backgroundColor = UIColor.systemBlue
-        let image = UIImage(systemName: "paperplane")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(systemName: "paperplane", withConfiguration:
+                                UIImage.SymbolConfiguration(pointSize: 22, weight: .medium))?.withRenderingMode(.alwaysTemplate)
         postButton.setImage(image, for: .normal)
         postButton.translatesAutoresizingMaskIntoConstraints = false
         postButton.clipsToBounds = true
-        postButton.layer.cornerRadius = 20.0
-        postButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 11, bottom: 0, right: 16)
-        postButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -8)
+        postButton.layer.cornerRadius = 25.0
+        postButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         postButton.tintColor = .white
-        postButton.semanticContentAttribute = .forceRightToLeft
-        let font =  KanvasFonts.yahooFont(withSize: 16)
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: UIColor.white,
-        ]
-
-        let attributedTitle = NSAttributedString(string: "Send", attributes: attributes)
-        postButton.setAttributedTitle(attributedTitle, for: .normal)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(postButtonPressed))
         postButton.addGestureRecognizer(tapGestureRecognizer)
@@ -724,6 +715,7 @@ final class EditorView: UIView, MovableViewCanvasDelegate, MediaPlayerViewDelega
         saveButton.accessibilityLabel = "Save Button"
         navigationContainer.addSubview(saveButton)
         saveButton.layer.applyShadows()
+        saveButton.imageEdgeInsets = UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0)
         saveButton.setImage(KanvasImages.saveImage, for: .normal)
         saveButton.imageView?.tintColor = .white
         saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)

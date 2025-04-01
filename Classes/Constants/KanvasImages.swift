@@ -56,7 +56,8 @@ public struct KanvasImages {
     static let trashBinOpened = UIImage.imageFromCameraBundle(named: "trashBinOpened")
     static let circleImage = UIImage.imageFromCameraBundle(named: "circleIcon")
     static let nextArrowImage = UIImage.imageFromCameraBundle(named: "nextArrow")
-    static let saveImage = UIImage.imageFromCameraBundle(named: "save")
+    static let saveImage = UIImage(systemName: "square.and.arrow.down",
+                                   withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .medium))
     static let cogImage = UIImage.imageFromCameraBundle(named: "cog")
     static let tagImage = UIImage.imageFromCameraBundle(named: "tag")
 
@@ -90,11 +91,15 @@ public struct KanvasImages {
         ],
         .filter: [UIImage.imageFromCameraBundle(named: "editorFilters")],
         .text: [UIImage.imageFromCameraBundle(named: "editorText")],
-        .media: [UIImage.imageFromCameraBundle(named: "editorMedia")],
-        .photoStickers: [UIImage(systemName: "camera")],
+        .media: [UIImage(systemName: "chart.line.uptrend.xyaxis",
+                         withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .medium))],
+        .photoStickers: [UIImage(systemName: "camera",
+                                 withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .medium))],
         .drawing: [UIImage.imageFromCameraBundle(named: "editorDraw")],
-        .cropRotate: [UIImage.imageFromCameraBundle(named: "editorCropRotate")]
+        .cropRotate: [UIImage(systemName: "crop.rotate",
+                              withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .medium))]
     ]
+    
     
     static let styleIcons: [EditionOption: [UIImage?]] = [
         .gif: [
