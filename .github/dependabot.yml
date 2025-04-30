@@ -1,0 +1,18 @@
+version: 2
+updates:
+    - package-ecosystem: bundler
+      directory: /
+      schedule:
+        interval: weekly
+        time: "10:00"
+        day: tuesday
+      allow:
+        - dependency-type: all
+    - package-ecosystem: swift
+      directory: /
+      schedule:
+        interval: weekly
+        time: "10:00"
+        day: friday
+      allow:
+        - dependency-type: all
