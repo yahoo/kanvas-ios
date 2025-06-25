@@ -273,9 +273,7 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.8.2)
+    unf (0.2.0)
     unicode-display_width (1.8.0)
     webrick (1.7.0)
     word_wrap (1.0.0)
