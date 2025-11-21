@@ -14,7 +14,7 @@ let package = Package(
             targets: ["Kanvas"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/TimOliver/TOCropViewController.git", exact: "2.7.4"),
+        .package(url: "https://github.com/TimOliver/TOCropViewController.git", .upToNextMajor(from:"3.1.1")),
     ],
     targets: [
         .target(
